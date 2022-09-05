@@ -43,7 +43,7 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
 ## 목차
 
 * [일반(General)](#일반general)
-* [Layout](#layout)
+* [레이아웃(Layout)](#레이아웃layout)
 * [Syntax](#syntax)
 * [Naming](#naming)
 * [Classes and Modules](#classes-and-modules)
@@ -80,53 +80,50 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
 
 * 3개보다 많은 블록 중첩이 생기지 않게 피하세요.
 
-## Layout
+## 레이아웃(Layout)
 
-* Use `UTF-8` as the source file encoding.
+* 소스 파일 인코딩은 `UTF-8`로 사용하세요.
 
-* Use 2 space indent, no tabs.
+* 들여쓰기 시 탭이 아닌 공백 2칸을 사용하세요.
 
-* Use Unix-style line endings.
+* Unix 스타일의 줄바꿈을 사용하세요.
 
-* Avoid using `;` to separate statements and expressions. Use one
-  expression per line.
+* 명령문 및 표현식들을 구분하기 위해 `;`을 사용하는 걸 피하세요. 1라인마다 1개의 표현식을 쓰세요.
 
-* Use spaces around operators, after commas, colons and semicolons, around `{`
-  and before `}`.
+* 연산자 앞뒤, `,`, `:`, `;` 뒤, `{` 앞뒤, `}` 앞에 공백을 사용하세요.
 
-* Avoid spaces after `(`, `[` and before `]`, `)`.
+* `(`, `[` 이후나 `]`, `)` 이전의 공백 사용을 피하세요.
 
-* Avoid space after the `!` operator.
+* `!` 연산자 이후에 공백 사용을 피하세요.
 
-* Avoid space inside range literals.
+* 범위식(e.g. `1..5`)에서는 공백 사용을 피하세요.
 
-* Avoid space around method call operators.
+* 메서드 콜 앞뒤에는 공백 사용을 피하세요.
 
   ~~~ruby
-  # bad
+  # 나쁜 예
   foo . bar
 
-  # good
+  # 좋은 예
   foo.bar
   ~~~
 
-* Avoid space in lambda literals.
+* 람다식 내에서는 공백 사용을 피하세요.
 
   ~~~ruby
-  # bad
+  # 나쁜 예
   a = -> (x, y) { x + y }
 
-  # good
+  # 좋은 예
   a = ->(x, y) { x + y }
   ~~~
 
-* Indent `when` as deep as the `case` line.
+* `when`은 `case`와 같은 깊이로 들여쓰기를 하세요.
 
-* When assigning the result of a conditional expression to a variable, align its
-  branches with the variable that receives the return value.
+* 조건문을 이용해 리턴값으로 변수 할당 시, 조건문 브랜치(`if`, `else`, ...)를 변수에 맞추세요.
 
   ~~~ ruby
-  # bad
+  # 나쁜 예
   result =
     if some_cond
       # ...
@@ -136,7 +133,7 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
       calc_something_else
     end
 
-  # good
+  # 좋은 예
   result = if some_cond
     # ...
     # ...
@@ -146,17 +143,17 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
   end
   ~~~
 
-* When assigning the result of a begin block, align rescue/ensure/end with the start of the line
+* begin 블록 결과값으로 할당 시, rescue/ensure/end를 시작 라인에 맞추세요.
 
   ~~~ ruby
-  # bad
+  # 나쁜 예
   host = begin
            URI.parse(value).host
          rescue URI::Error
            nil
          end
 
-  # good
+  # 좋은 예
   host = begin
     URI.parse(value).host
   rescue URI::Error
