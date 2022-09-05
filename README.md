@@ -38,7 +38,7 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
 
 그럼 이 스타일 가이드의 `Include`, `Exclude` 설정값이 RuboCop의 기본 구성에 적용됩니다.
 
-설정 상속에 대한 더 많은 정보는 [RuboCop 문서](https://docs.rubocop.org/rubocop/configuration.html#inheriting-configuration-from-a-dependency-gem)를 참고해 주세요.
+설정 적용에 대한 더 많은 정보는 [RuboCop 문서](https://docs.rubocop.org/rubocop/configuration.html#inheriting-configuration-from-a-dependency-gem)를 참고해 주세요.
 
 ## Table of Contents
 
