@@ -40,9 +40,9 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
 
 설정 적용에 대한 더 많은 정보는 [RuboCop 문서](https://docs.rubocop.org/rubocop/configuration.html#inheriting-configuration-from-a-dependency-gem)를 참고해 주세요.
 
-## Table of Contents
+## 목차
 
-* [General](#general)
+* [일반(General)](#일반general)
 * [Layout](#layout)
 * [Syntax](#syntax)
 * [Naming](#naming)
@@ -54,32 +54,31 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
 * [Percent Literals](#percent-literals)
 * [Testing](#testing)
 
-## General
+## 일반(General)
 
-* Make all lines of your methods operate on the same level of abstraction.
-  (Single Level of Abstraction Principle)
+* 메소드의 모든 라인이 같은 추상화 단계에서 동작하게 해라.
+  (Single Level of Abstraction 원리)
 
-* Code in a functional way. Avoid mutation (side effects) when you can.
+* 함수형 방식으로 코딩해라. 가능한 한 뮤테이션 (사이드 이펙트)를 피해라.
 
-* [Avoid defensive programming](https://web.archive.org/web/20211013164839/http://www.erlang.se/doc/programming_rules.shtml#HDR11)
-  > Overly defensive programming may safeguard against errors that will never be encountered, thus incurring run-time and maintenance costs.
+* [방어적 프로그래밍을 피해라.](https://web.archive.org/web/20211013164839/http://www.erlang.se/doc/programming_rules.shtml#HDR11)
+  > 과한 방어적 프로그래밍은 전혀 발생하지 않을 에러를 보호해 불필요한 런타임 및 유지 보수 비용을 발생시킬 수 있다.
 
-* Avoid mutating arguments.
+* 함수 내에서 인자값의 변화를 피해라.
 
-* Avoid monkeypatching.
+* 몽키패치 방식을 피해라.
 
-* Avoid long methods.
+* 긴 메서드가 되지 않게 피해라.
 
-* Avoid long parameter lists.
+* 많은 매개변수를 갖지 않게 피해라.
 
-* Avoid needless metaprogramming.
+* 필요없는 메타 프로그래밍을 피해라.
 
-* Prefer `public_send` over `send` so as not to circumvent `private`/`protected`
-  visibility.
+* `private`/`protected`가 우회되지 않게 `send` 보다 `public_send`를 선호해라.
 
-* Write `ruby -w` safe code.
+* `ruby -w`를 통해 안전한 코드를 작성해라.
 
-* Avoid more than three levels of block nesting.
+* 3개보다 많은 블록 중첩을 피해라.
 
 ## Layout
 
