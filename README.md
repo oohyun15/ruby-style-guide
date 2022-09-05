@@ -4,49 +4,41 @@ title: Ruby Style Guide
 permalink: '/'
 ---
 
-# Ruby Style Guide
+# 루비 스타일 가이드
 
-Ruby is the main language at Shopify. We are primarily a Ruby shop and we are
-probably one of the largest out there. Ruby is the go-to language for new web
-projects and scripting.
+Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드는 주로 Ruby로 이뤄져 있으며 아마 Ruby로 짜여진
+큰 회사들 중 하나일 것입니다. 또한 Ruby는 저희가 새로운 웹 프로젝트 및 스크립트 작성 시 즐겨 사용하는 언어입니다.
 
-We expect all developers at Shopify to have at least a passing understanding of
-Ruby. It's a great language. It will make you a better developer no matter what
-you work in day to day. What follows is a loose coding style to follow while
-developing in Ruby.
+저희는 Shopify의 모든 개발자들이 Ruby에 대한 최소한의 이해는 있다고 기대합니다. 정말 대단한 언어에요. 이 언어는
+여러분이 매일 어떤 일을 하든 더 나은 개발자로 만들어 줄겁니다. 아래 내용들은 Ruby로 개발하면서 따라야 할 느슨한
+코딩 스타일입니다.
 
-This Style Guide is the result of over a decade of Ruby development at Shopify.
-Much of its content is based on Bozhidar Batsov's [Ruby Style
-Guide](https://github.com/rubocop-hq/ruby-style-guide), adapted to Shopify by
-[many
-contributors](https://github.com/Shopify/ruby-style-guide/graphs/contributors).
+이 스타일 가이드는 10여 년간 Shopify에서의 Ruby 개발에 대한 결과물입니다. 가이드 내용의 대부분은 Bozhidar Batsov의
+[루비 스타일 가이드](https://github.com/rubocop-hq/ruby-style-guide)에 기반을 두고 있고, Shopify의
+[많은 컨트리뷰터들](https://github.com/Shopify/ruby-style-guide/graphs/contributors)에 의해 각색되어 있습니다.
 
-### Adoption with RuboCop
+### RuboCop에 적용하기
 
-We recommend using [RuboCop](https://github.com/rubocop-hq/rubocop) in your Ruby
-projects to help you adopt this Style Guide. To know how to install and use
-RuboCop please refer to [RuboCop's official
-documentation](https://docs.rubocop.org/rubocop/).
+저희는 여러분의 Ruby 프로젝트들에서 이 스타일 가이드를 적용할 수 있도록 [RuboCop](https://github.com/rubocop-hq/rubocop)을
+사용하는 걸 추천합니다. RuboCop 설치 및 사용 방법은 [RuboCop 공식 문서](https://docs.rubocop.org/rubocop/)를 참고해주세요.
 
-We offer a default RuboCop configuration you can inherit from and be in sync
-with this Style Guide. To use it, you can add this to your `Gemfile`:
+저희는 이 스타일 가이드로 적용하고 싱크할 수 있는 기본 RuboCop 구성을 제공합니다.
+이를 사용하려면 `Gemfile`에 아래 코드를 추가해 주세요.
 
   ~~~ruby
   gem "rubocop-shopify", require: false
   ~~~
 
-And add to the top of your project's RuboCop configuration file:
+그리고 프로젝트의 RuboCop 설정 파일의 최상단에 아래 코드를 추가해 주세요.
 
   ~~~yml
   inherit_gem:
     rubocop-shopify: rubocop.yml
   ~~~
 
-Any `Include` or `Exclude` configuration provided will be merged with RuboCop's defaults.
+그럼 이 스타일 가이드의 `Include`, `Exclude` 설정값이 RuboCop의 기본 구성에 적용됩니다.
 
-For more information about inheriting configuration from a gem please check
-[RuboCop's
-documentation](https://docs.rubocop.org/rubocop/configuration.html#inheriting-configuration-from-a-dependency-gem).
+설정 상속에 대한 더 많은 정보는 [RuboCop 문서](https://docs.rubocop.org/rubocop/configuration.html#inheriting-configuration-from-a-dependency-gem)를 참고해 주세요.
 
 ## Table of Contents
 
