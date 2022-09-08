@@ -56,7 +56,7 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
 
 ## 일반(General)
 
-* 메소드의 모든 라인이 같은 추상화 단계에서 동작하게 하세요.
+* 메서드의 모든 줄이 같은 추상화 단계에서 동작하게 하세요.
   (Single Level of Abstraction 원리)
 
 * 함수형 방식으로 코딩하세요. 가능한 한 뮤테이션 (사이드 이펙트)를 피하세요.
@@ -88,7 +88,7 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
 
 * Unix 스타일의 줄바꿈을 사용하세요.
 
-* 명령문 및 표현식들을 구분하기 위해 `;`을 사용하는 걸 피하세요. 1라인마다 1개의 표현식을 쓰세요.
+* 명령문 및 표현식들을 구분하기 위해 `;`을 사용하는 걸 피하세요. 1줄마다 1개의 표현식을 쓰세요.
 
 * 연산자 앞뒤, `,`, `:`, `;` 뒤, `{` 앞뒤, `}` 앞에 공백을 사용하세요.
 
@@ -143,7 +143,7 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
   end
   ~~~
 
-* begin 블록 결과값으로 할당 시, rescue/ensure/end를 시작 라인에 맞추세요.
+* begin 블록 결과값으로 변수 할당 시, rescue/ensure/end를 시작 줄에 맞추세요.
 
   ~~~ ruby
   # 나쁜 예
@@ -161,25 +161,21 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
   end
   ~~~
 
-* Use empty lines between method definitions and also to break up methods into
-  logical paragraphs internally.
+* 메서드 정의 사이마다, 그리고 메서드 내부적으로 논리적 단락마다 빈 줄을 사용하세요.
 
-* Use spaces around the `=` operator when assigning default values to method
-  parameters.
+* 메서드 파라미터에 기본값을 할당할 때 `=` 연산자 주변에 공백을 사용하세요.
 
-* Avoid line continuation `\` where not required.
+* 불필요한 `\` 줄 바꿈을 피하세요.
 
-* Align the parameters of a method call, if they span more than one line, with
-  one level of indentation relative to the start of the line with the method
-  call.
+* 만약 메서드 호출 시 파라미터로 인해 1줄이 넘어갈 때, 파라미터를 메서드 호출 줄보다 1탭 더 들여쓰세요.
 
   ~~~ ruby
-  # starting point (line is too long)
+  # 시작 상태 (줄이 너무 김)
   def send_mail(source)
     Mailer.deliver(to: "bob@example.com", from: "us@example.com", subject: "Important message", body: source.text)
   end
 
-  # bad (double indent)
+  # 나쁜 예 (2번 들여쓰기)
   def send_mail(source)
     Mailer.deliver(
         to: "bob@example.com",
@@ -188,7 +184,7 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
         body: source.text)
   end
 
-  # good
+  # 좋은 예
   def send_mail(source)
     Mailer.deliver(
       to: "bob@example.com",
@@ -199,66 +195,64 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
   end
   ~~~
 
-* When chaining methods on multiple lines, indent successive calls by one level
-  of indentation.
+* 여러 줄에 걸쳐 메서드 체인을 할 때, 1탭 더 들여써서 메서드를 호출하세요.
 
   ~~~ ruby
-  # bad (indented to the previous call)
+  # 나쁜 예 (이전 메서드 호출에 맞게 들여쓰기)
   User.pluck(:name)
       .sort(&:casecmp)
       .chunk { |n| n[0] }
 
-  # good
+  # 좋은 예
   User
     .pluck(:name)
     .sort(&:casecmp)
     .chunk { |n| n[0] }
   ~~~
 
-* Align the elements of array literals spanning multiple lines.
+* 여러 줄에 걸친 배열 원소를 정렬하세요.
 
-* Limit lines to 120 characters.
+* 한 줄에 최대 120자로 제한하세요.
 
-* Avoid trailing whitespace.
+* 줄 마지막에 공백을 피하세요.
 
-* Avoid extra whitespace, except for alignment purposes.
+* 정렬 목적을 제외한 여분의 공백을 피하세요.
 
-* End each file with a newline.
+* 모든 파일을 줄바꿈으로 끝내세요.
 
-* Avoid block comments:
+* 블록 주석을 피하세요.
 
   ~~~ ruby
-  # bad
+  # 나쁜 예
   =begin
   comment line
   another comment line
   =end
 
-  # good
+  # 좋은 예
   # comment line
   # another comment line
   ~~~
 
-* Place the closing method call brace on the line after the last argument when
-  opening brace is on a separate line from the first argument.
+* 메소드 호출 시 여는 괄호가 첫 번째 인자와 다른 줄에 있을 때, 닫는 괄호를 마지막 인자 뒷 줄에 사용하세요.
 
   ~~~ ruby
-  # bad
+  # 나쁜 예
   method(
     arg_1,
     arg_2)
 
-  # good
+  # 좋은 예
   method(
     arg_1,
     arg_2,
   )
   ~~~
 
-* Separate magic comments from code and documentation with a blank line.
+* 매직 코멘트와 코드 및 설명 주석을 빈 줄로 분리하세요.
 
   ~~~ruby
-  # good
+  # 좋은 예
   # frozen_string_literal: true
 
   # Some documentation for Person
@@ -266,7 +260,7 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
     # Some code
   end
 
-  # bad
+  # 나쁜 예
   # frozen_string_literal: true
   # Some documentation for Person
   class Person
@@ -274,10 +268,10 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
   end
   ~~~
 
-* Use empty lines around attribute accessor.
+* 접근 제어자(attribute accessor) 주변에 빈 줄을 사용하세요.
 
   ~~~ruby
-  # bad
+  # 나쁜 예
   class Foo
     attr_reader :foo
     def foo
@@ -285,7 +279,7 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
     end
   end
 
-  # good
+  # 좋은 예
   class Foo
     attr_reader :foo
 
@@ -295,10 +289,10 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
   end
   ~~~
 
-* Avoid empty lines around method, class, module, and block bodies.
+* 메서드, 클래스, 모듈, 블록 간에 빈 줄을 피하세요.
 
   ~~~ruby
-  # bad
+  # 나쁜 예
   class Foo
 
     def foo
@@ -323,7 +317,7 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
 
   end
 
-  # good
+  # 좋은 예
   class Foo
     def foo
       begin
