@@ -44,7 +44,7 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
 
 * [일반(General)](#일반general)
 * [레이아웃(Layout)](#레이아웃layout)
-* [Syntax](#syntax)
+* [문법(Syntax)](#문법syntax)
 * [Naming](#naming)
 * [Classes and Modules](#classes-and-modules)
 * [Exceptions](#exceptions)
@@ -74,7 +74,7 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
 
 * 필요없는 메타 프로그래밍을 피하세요.
 
-* `private`/`protected`가 우회되지 않게 `send` 보다 `public_send`를 사용하는 걸 선호하세요.
+* `private`/`protected`가 우회되지 않게 `send` 보다 `public_send`를 사용하세요.
 
 * `ruby -w`를 통해 안전한 코드를 작성하세요.
 
@@ -234,7 +234,7 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
   # another comment line
   ~~~
 
-* 메소드 호출 시 여는 괄호가 첫 번째 인자와 다른 줄에 있을 때, 닫는 괄호를 마지막 인자 뒷 줄에 사용하세요.
+* 메서드 호출 시 여는 괄호가 첫 번째 인자와 다른 줄에 있을 때, 닫는 괄호를 마지막 인자 뒷 줄에 사용하세요.
 
   ~~~ ruby
   # 나쁜 예
@@ -331,26 +331,24 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
   end
   ~~~
 
-## Syntax
+## 문법(Syntax)
 
-* Use `::` only to reference constants (this includes classes and modules) and
-  constructors (like `Array()` or `Nokogiri::HTML()`). Avoid `::` for
-  regular method invocation.
+* 오직 상수(클래스 및 모듈 포함)와 생성자(ex. `Array()`, `Nokogiri::HTML()`)를 참조할 때만
+  `::`를 사용하세요. 일반 메서드 호출에서는 `::`를 피하세요.
 
-* Avoid using `::` for defining class and modules, or for inheritance, since
-  constant lookup will not search in parent classes/modules.
+* 상수를 찾아갈 때 부모 클래스/모듈을 탐색하지 않으므로 클래스와 모듈을 정의, 상속할 때 `::` 사용을 피하세요.
 
   ~~~ ruby
-  # bad
+  # 나쁜 예
   module A
     FOO = "test"
   end
 
   class A::B
-    puts FOO  # this will raise a NameError exception
+    puts FOO  # NameError exception을 발생시킨다.
   end
 
-  # good
+  # 좋은 예
   module A
     FOO = "test"
 
@@ -360,54 +358,52 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
   end
   ~~~
 
-* Use def with parentheses when there are parameters. Omit the parentheses when
-  the method doesn't accept any parameters.
+* 메서드에 파라미터가 있을 때 괄호와 함께 `def`를 사용하세요. 메서드에 어느 파라미터도 들어가지 않을 때
+  괄호를 생략하세요.
 
-* Avoid `for`.
+* `for` 사용을 피하세요.
 
-* Avoid `then`.
+* `then` 사용을 피하세요.
 
-* Favour the ternary operator(`?:`) over `if/then/else/end` constructs.
+* `if/then/else/end` 구조보다 삼항 연산자(`?:`) 사용하세요.
 
   ~~~ ruby
-  # bad
+  # 나쁜 예
   result = if some_condition then something else something_else end
 
-  # good
+  # 좋은 예
   result = some_condition ? something : something_else
   ~~~
 
-* Use one expression per branch in a ternary operator. This also means that
-  ternary operators must not be nested. Prefer if/else constructs in these
-  cases.
+* 삼항 연산자에서 분기당 하나의 표현식을 사용하세요. 즉, 삼항 연산자는 반드시 중첩되지 않아야 합니다.
+  이런 경우에는 `if/else` 구조를 사용하세요.
 
-* Avoid multiline `?:` (the ternary operator); use `if/unless` instead.
+* 여러 줄의 `?:`(삼항 연산자) 사용을 피하세요. 대신 `if/unless`를 사용하세요.
 
-* Use `when x then ...` for one-line cases.
+* 1줄 조건일 때 `when x then ...`을 사용하세요.
 
-* Use `!` instead of `not`.
+* `not` 대신 `!`을 사용하세요.
 
-* Prefer `&&`/`||` over `and`/`or`.
+* `and`/`or`보단 `&&`/`||`을 사용하세요.
 
-* Favour `unless` over `if` for negative conditions.
+* 부정 조건문에서 `if`보단 `unless`를 사용하세요.
 
-* Avoid `unless` with `else`. Rewrite these with the positive case first.
+* `else`와 함께 `unless` 사용을 피하세요. 긍정 조건문이 먼저 앞에 오도록 다시 작성하세요.
 
-* Use parentheses around the arguments of method invocations. Omit parentheses
-  when not providing arguments. Also omit parentheses when the invocation is
-  single-line and the method:
-  - is a class method call with implicit receiver.
-  - is called by syntactic sugar (e.g: `1 + 1` calls the `+` method, `foo[bar]`
-    calls the `[]` method, etc).
+* 메서드 호출 시 인자들 사이에 괄호를 사용하세요. 단, 인자를 제공하지 않는 메서드의 경우엔 괄호를 생략하세요.
+  또는 메서드 호출 시 단일 줄이면서 아래 조건일 때는 괄호를 생략하세요.
+  - 내부 수신자를 포함한 클래스 메서드 호출일 때
+  - 문법 설탕(Syntactic sugar)을 통한 호출일 때 (예시로 `1 + 1`은 `+` 메서드를 호출하고, `foo[bar]`
+    는 `[]` 메서드를 호출한다.)
 
   ~~~ ruby
-  # bad
+  # 나쁜 예
   class User
     include(Bar)
     has_many(:posts)
   end
 
-  # good
+  # 좋은 예
   class User
     include Bar
     has_many :posts
@@ -415,7 +411,7 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
   end
   ~~~
 
-  - is one of the following methods:
+  - 아래 메서드들 중 하나일 때
     * `require`
     * `require_relative`
     * `require_dependency`
@@ -423,7 +419,7 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
     * `raise`
     * `puts`
 
-* Omit the outer braces around an implicit options hash.
+* 메서드를 키워드 인자와 함께 호출할 때 중괄호를 생략한다.
 
 * Use the proc invocation shorthand when the invoked method is the only
   operation of a block.
