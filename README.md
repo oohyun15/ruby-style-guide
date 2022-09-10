@@ -88,7 +88,7 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
 
 * Unix 스타일의 줄바꿈을 사용하세요.
 
-* 명령문 및 표현식들을 구분하기 위해 `;`을 사용하는 걸 피하세요. 1줄마다 1개의 표현식을 쓰세요.
+* 명령문 및 표현식을 구분하기 위해 `;`을 사용하는 걸 피하세요. 1줄마다 1개의 표현식을 쓰세요.
 
 * 연산자 앞뒤, `,`, `:`, `;` 뒤, `{` 앞뒤, `}` 앞에 공백을 사용하세요.
 
@@ -393,7 +393,7 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
 * 메서드 호출 시 인자들 사이에 괄호를 사용하세요. 단, 인자를 제공하지 않는 메서드의 경우엔 괄호를 생략하세요.
   또는 메서드 호출 시 단일 줄이면서 아래 조건일 때는 괄호를 생략하세요.
   - 내부 수신자를 포함한 클래스 메서드 호출일 때
-  - 문법 설탕(Syntactic sugar)을 통한 호출일 때 (예시로 `1 + 1`은 `+` 메서드를 호출하고, `foo[bar]`
+  - 문법 설탕(syntactic sugar)을 통한 호출일 때 (예시로 `1 + 1`은 `+` 메서드를 호출하고, `foo[bar]`
     는 `[]` 메서드를 호출한다.)
 
   ~~~ ruby
@@ -419,70 +419,68 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
     * `raise`
     * `puts`
 
-* 메서드를 키워드 인자와 함께 호출할 때 중괄호를 생략한다.
+* 메서드 호출 시 내부 옵션 해시의 중괄호를 생략하세요.
 
-* Use the proc invocation shorthand when the invoked method is the only
-  operation of a block.
+* 블록 내 메서드 호출이 유일한 연산일 때 proc 호출 단축 방법을 사용하세요.
 
   ~~~ ruby
-  # bad
+  # 나쁜 예
   names.map { |name| name.upcase }
 
-  # good
+  # 좋은 예
   names.map(&:upcase)
   ~~~
 
-* Prefer `{...}` over `do...end` for single-line blocks.
+* 단일 줄 블록에서 `do...end`보단 `{...}`을 사용하세요.
 
-* Prefer `do..end` over `{...}` for multi-line blocks.
+* 여러 줄 블록에서 `{...}`보단 `do...end`를 사용하세요.
 
-* Omit `return` where possible.
+* 가능하다면 `return`을 생략하세요.
 
-* Omit `self` where possible.
+* 가능하다면 `self`를 생략하세요.
 
   ~~~ ruby
-  # bad
+  # 나쁜 예
   self.my_method
 
-  # good
+  # 좋은 예
   my_method
 
-  # also good
+  # 또한 좋은 예
   attr_writer :name
 
   def my_method
-    self.name = "Rafael" # `self` is needed to reference the attribute writer.
+    self.name = "Rafael" # `self`는 접근 제어자를 참조할 때 필요합니다.
   end
   ~~~
 
-* Wrap assignment in parentheses when using its return value in a conditional
-  statement.
+* 조건문에서 해당 리턴값을 사용할 때 괄호로 그 식을 감싸주세요.
 
   ~~~ ruby
   if (value = /foo/.match(string))
   ~~~
 
-* Use `||=` to initialize variables only if they're not already initialized.
+* 초기화되지 않은 변수를 초기화할 때 `||=`를 사용하세요.
 
-* Avoid using `||=` to initialize boolean variables.
+* Boolean 변수를 초기화할 때 `||=` 사용을 피하세요.
 
   ~~~ ruby
-  # bad - would set enabled to true even if it was false
+  # 나쁜 예 - 값이 false더라도 true로 설정된다. 
   @enabled ||= true
 
-  # good
+  # 좋은 예
   @enabled = true if @enabled.nil?
 
-  # also valid - defined? workaround
+  # 또한 타당한 예 - defined?를 이용한 회피 방법
   @enabled = true unless defined?(@enabled)
   ~~~
 
-* Avoid spaces between a method name and the opening parenthesis.
+* 메서드 이름과 여는 괄호 사이에 공백을 피하세요.
 
-* Prefer the lambda literal syntax over `lambda`.
+* `lambda` 키워드를 사용하기 보단 람다 표현식을 사용하세요.
 
   ~~~ ruby
-  # bad
+  # 나쁜 예
   l = lambda { |a, b| a + b }
   l.call(1, 2)
 
@@ -491,7 +489,7 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
     tmp * b / 50
   end
 
-  # good
+  # 좋은 예
   l = ->(a, b) { a + b }
   l.call(1, 2)
 
@@ -501,16 +499,15 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
   end
   ~~~
 
-* Prefer `proc` over `Proc.new`.
+* `Proc.new`보단 `proc`을 사용하세요.
 
-* Prefix unused block parameters with `_`. It's also acceptable to use just `_`.
+* 사용하지 않는 블록 파라미터 이름 앞에 `_`를 붙이세요. 또한 그저 `_`로 사용해도 괜찮습니다.
 
-* Prefer a guard clause when you can assert invalid data. A guard clause is a
-  conditional statement at the top of a function that bails out as soon as it
-  can.
+* 유효하지 않은 데이터가 생길 수 있을 때 보호 구문(guard clause)를 사용하세요. 보호 구문은 함수 맨 위에
+  있는 가능한 한 빨리 빠져나올 수 있는 조건문입니다.
 
   ~~~ ruby
-  # bad
+  # 나쁜 예
   def compute_thing(thing)
     if thing[:foo]
       update_with_bar(thing)
@@ -522,7 +519,7 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
     end
   end
 
-  # good
+  # 좋은 예
   def compute_thing(thing)
     return unless thing[:foo]
     update_with_bar(thing[:foo])
@@ -531,15 +528,15 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
   end
   ~~~
 
-* Prefer keyword arguments over options hash.
+* 옵션 해시보단 키워드 인자를 권장합니다.
 
-* Prefer `map` over `collect`, `find` over `detect`, `select` over `find_all`,
-  `size` over `length`.
+* `collect`보단 `map`, `detect`보단 `find`, `find_all`보단 `select`, `length`보단
+  `size`를 권장합니다.
 
-* Prefer `Time` over `DateTime`.
+* `DateTime`보단 `Time`을 권장합니다.
 
-* Prefer `Time.iso8601(foo)` instead of `Time.parse(foo)` when expecting ISO8601
-  formatted time strings like `"2018-03-20T11:16:39-04:00"`.
+* `"2018-03-20T11:16:39-04:00"`과 같이 ISO08601 포맷의 시간 문자열을 기대할 때 `Time.parse(foo)`
+  대신 `Time.iso8601(f00)`를 권장합니다.
 
 ## Naming
 
