@@ -44,7 +44,7 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
 * [일반(General)](#일반general)
 * [레이아웃(Layout)](#레이아웃layout)
 * [문법(Syntax)](#문법syntax)
-* [Naming](#naming)
+* [네이밍(Naming)](#네이밍naming)
 * [Classes and Modules](#classes-and-modules)
 * [Exceptions](#exceptions)
 * [Collections](#collections)
@@ -63,7 +63,7 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
 * [방어적 프로그래밍을 피하세요.](https://web.archive.org/web/20211013164839/http://www.erlang.se/doc/programming_rules.shtml#HDR11)
   > 과한 방어적 프로그래밍은 전혀 발생하지 않을 에러를 보호해 불필요한 런타임 및 유지 보수 비용을 발생시킬 수 있습니다.
 
-* 함수 내에서 인자값의 변화를 피하세요.
+* 메서드 내에서 인자값의 변화를 피하세요.
 
 * 몽키패치 방식을 피하세요.
 
@@ -95,7 +95,7 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
 
 * `!` 연산자 이후에 공백 사용을 피하세요.
 
-* 범위식(e.g. `1..5`)에서는 공백 사용을 피하세요.
+* 범위식(예시: `1..5`)에서는 공백 사용을 피하세요.
 
 * 메서드 콜 앞뒤에는 공백 사용을 피하세요.
 
@@ -332,7 +332,7 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
 
 ## 문법(Syntax)
 
-* 오직 상수(클래스 및 모듈 포함)와 생성자(ex. `Array()`, `Nokogiri::HTML()`)를 참조할 때만
+* 오직 상수(클래스 및 모듈 포함)와 생성자(예시: `Array()`, `Nokogiri::HTML()`)를 참조할 때만
   `::`를 사용하세요. 일반 메서드 호출에서는 `::`를 피하세요.
 
 * 상수를 찾아갈 때 부모 클래스/모듈을 탐색하지 않으므로 클래스와 모듈을 정의, 상속할 때 `::` 사용을 피하세요.
@@ -534,57 +534,55 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
 
 * `DateTime`보단 `Time`을 권장합니다.
 
-* `"2018-03-20T11:16:39-04:00"`과 같이 ISO08601 포맷의 시간 문자열을 기대할 때 `Time.parse(foo)`
+* `"2018-03-20T11:16:39-04:00"`과 같이 ISO08601 포맷의 문자열을 받을 때 `Time.parse(foo)`
   대신 `Time.iso8601(f00)`를 권장합니다.
 
-## Naming
+## 네이밍(Naming)
 
-* Use `snake_case` for symbols, methods, and variables.
+* 심볼, 메서드, 변수에 대해선 `snake_case`를 사용하세요.
 
-* Use `CamelCase` for classes and modules, but keep acronyms like HTTP, RFC, XML
-  uppercase.
+* 클래스, 모듈에 대해선 `CamelCase`를 사용하세요. 단, HTTP, RFC, XML과 같은 두문자어에 대해선
+  그대로 대문자로 유지하세요.
 
-* Use `snake_case` for naming files and directories, e.g. `hello_world.rb`.
+* 파일 및 디렉토리 네이밍에 대해선 `snake_case`를 사용하세요. (예시: `hello_world.rb`)
 
-* Define a single class or module per source file. Name the file name as the
-  class or module, but replacing `CamelCase` with `snake_case`.
+* 소스파일당 하나의 클래스나 모듈을 정의하세요. 파일 이름을 클래스나 모듈의 이름으로 지으세요. 단,
+  `CamelCase`를 `snake_case`로 바꾸세요.
 
-* Use `SCREAMING_SNAKE_CASE` for other constants.
+* 상수에 대해선 `SCREAMING_SNAKE_CASE`를 사용하세요.
 
-* When using inject with short blocks, name the arguments according to what is
-  being injected, e.g. `|hash, e|` (mnemonic: hash, element)
+* 짧은 블록을 넣을 때, 실제 인자값으로 들어갈 것에 따라 해당 인자의 이름을 지으세요. (예시:
+  `|hash, e|`는 hash, element로 유추 가능)
 
-* When defining binary operators, name the parameter `other`(`<<` and `[]` are
-  exceptions to the rule, since their semantics are different).
+* 이항 연산자를 정의할 때, 파라미터 이름을 `other`로 지으세요. (`<<`와 `[]`는 의미가 달라지므로
+  이 규칙에선 제외합니다.)
 
-* Name predicate methods with a `?`. Predicate methods are methods that return a
-  boolean value.
+* 서술형 메서드(predicate method)는 `?`와 함께 이름을 지으세요. 서술형 메서드는 boolean 값을
+  반환하는 메서드입니다.
 
-* Avoid ending method names with a `?` if they don't return a boolean.
+* 만약 메서드가 boolean 값을 반환하지 않는다면 메서드 이름 끝에 `?`를 피하세요.
 
-* Avoid prefixing method names with `is_`.
+* 메서드 이름 앞에 `is_`를 붙이는 걸 피하세요.
 
   ~~~ruby
-  # bad
+  # 나쁜 예
   def is_empty?
   end
 
-  # good
+  # 좋은 예
   def empty?
   end
   ~~~
 
-* Avoid starting method names with `get_`.
+* 메서드 이름 앞에 `get_`을 붙이는 걸 피하세요.
 
-* Avoid ending method names with `!` when there is no equivalent method without
-  the bang. Bangs are to mark a more dangerous version of a method, e.g. `save`
-  returns a boolean in ActiveRecord, whereas `save!` will throw an exception on
-  failure.
+* bang 타입이 아닌 메서드가 없을 때 메서드 이름 끝에 `!`을 붙이는 걸 피하세요. bang은 기본 메서드보다
+  더 위험한 버전의 메서드를 의미합니다. 예를 들어 `save`는 ActiveRecord에서 boolean 값을 반환하지만,
+  `save!`는 실패 시 예외를 발생시킵니다.
 
-* Avoid magic numbers. Use a constant and give it a meaningful name.
+* 매직 넘버를 피하세요. 상수를 사용하고 그 상수에 의미있는 이름을 지어주세요.
 
-* Avoid nomenclature that has (or could be interpreted to have) discriminatory
-  origins.
+* 차별적 기원을 가진 (혹은 그렇게 해석될 수 있는) 명명법을 피하세요.
 
 ## Comments
 
