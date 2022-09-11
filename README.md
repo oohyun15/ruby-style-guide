@@ -47,7 +47,7 @@ Ruby는 Shopify에서 사용하는 주요 언어입니다. 저희 소스코드�
 * [네이밍(Naming)](#네이밍naming)
 * [주석(Comments)](#주석comments)
 * [클래스 및 모듈(Classes and Modules)](#클래스-및-모듈classes-and-modules)
-* [Exceptions](#exceptions)
+* [예외(Exceptions)](#예외exceptions)
 * [Collections](#collections)
 * [Strings](#strings)
 * [Regular Expressions](#regular-expressions)
@@ -581,7 +581,7 @@ Ruby는 Shopify에서 사용하는 주요 언어입니다. 저희 소스코드�
   더 위험한 버전의 메서드를 의미합니다. 예를 들어 `save`는 ActiveRecord에서 boolean 값을 반환하지만,
   `save!`는 실패 시 예외를 발생시킵니다.
 
-* 매직 넘버 사용을 피하세요. 상수를 사용하고 그 상수에 의미있는 이름을 지어주세요.
+* 매직 넘버 사용을 피하세요. 상수를 사용하고 그 상수에 의미 있는 이름을 지어주세요.
 
 * 차별적 어원을 가진 (혹은 그렇게 해석될 수 있는) 명명법 사용을 피하세요.
 
@@ -730,40 +730,38 @@ Ruby는 Shopify에서 사용하는 주요 언어입니다. 저희 소스코드�
 
 * `alias`보다 `alias_method` 사용을 권장합니다.
 
-## Exceptions
+## 예외(Exceptions)
 
-* Signal exceptions using the `raise` method.
+* `raise`를 사용해서 예외를 발생시키세요.
 
-* Omit `RuntimeError` in the two argument version of `raise`.
+* 2개 인자를 받는 `raise`에서 `RuntimeError`를 생략하세요.
 
   ~~~ ruby
-  # bad
+  # 나쁜 예
   raise RuntimeError, "message"
 
-  # good - signals a RuntimeError by default
+  # 좋은 예 - 기본적으로 RuntimeError를 발생시킵니다.
   raise "message"
   ~~~
 
-* Prefer supplying an exception class and a message as two separate arguments to
-  `raise` instead of an exception instance.
+* 예외 인스턴스 생성해 `raise`를 하는 것보다 예외 클래스와 메시지를 `raise` 두 인자값에 넣어 사용하는걸 권장합니다.
 
   ~~~ ruby
-  # bad
+  # 나쁜 예
   raise SomeException.new("message")
-  # Note that there is no way to do `raise SomeException.new("message"), backtrace`.
+  # `raise SomeException.new("message"), backtrace`와 같이 사용할 수 없습니다.
 
-  # good
+  # 좋은 예
   raise SomeException, "message"
-  # Consistent with `raise SomeException, "message", backtrace`.
+  # `raise SomeException, "message", backtrace`로 사용할 수 있습니다.
   ~~~
 
-* Avoid returning from an `ensure` block. If you explicitly return from a method
-  inside an `ensure` block, the return will take precedence over any exception
-  being raised, and the method will return as if no exception had been raised at
-  all. In effect, the exception will be silently thrown away.
+* `ensure` 블록으로부터 반환(return)하는 걸 피하세요. 만약 메서드 내 `ensure` 블록에서 명시적으로
+  반환한다면, 어떤 예외들이 발생하더라도 반환값이 나오게 되고, 그 메서드는 전혀 예외 발생을 하지 않았더라도
+  그 반환값을 도출합니다. 사실상 예외 발생 부분은 무시될 것입니다.
 
   ~~~ ruby
-  # bad
+  # 나쁜 예
   def foo
     raise
   ensure
@@ -771,10 +769,10 @@ Ruby는 Shopify에서 사용하는 주요 언어입니다. 저희 소스코드�
   end
   ~~~
 
-* Use implicit begin blocks where possible.
+* 가능하다면 명시적으로 `begin` 블록을 사용하지 마세요.
 
   ~~~ ruby
-  # bad
+  # 나쁜 예
   def foo
     begin
       # main logic goes here
@@ -783,7 +781,7 @@ Ruby는 Shopify에서 사용하는 주요 언어입니다. 저희 소스코드�
     end
   end
 
-  # good
+  # 좋은 예
   def foo
     # main logic goes here
   rescue
@@ -791,30 +789,27 @@ Ruby는 Shopify에서 사용하는 주요 언어입니다. 저희 소스코드�
   end
   ~~~
 
-* Avoid empty `rescue` statements.
+* 아무것도 하지 않는 `rescue` 구문 사용을 피하세요.
 
   ~~~ ruby
-  # bad
+  # 나쁜 예
   begin
-    # an exception occurs here
+    # 에러 발생
   rescue SomeError
-    # the rescue clause does absolutely nothing
+    # rescue 절에서 아무것도 하지 않음
   end
 
-  # bad - `rescue nil` swallows all errors, including syntax errors, and
-  # makes them hard to track down.
+  # 나쁜 예 - `rescue nil`은 문법 에러를 포함한 모든 에러들을 내포해서 에러 추적을 어렵게 만듭니다.
   do_something rescue nil
   ~~~
 
-* Avoid `rescue` in its modifier form.
+* 예외 발생 시점에서 바로 `resuce` 사용을 피하세요.
 
   ~~~ ruby
-  # bad - this catches exceptions of StandardError class and its descendant
-  # classes.
+  # 나쁜 예 - StandardError 클래스와 그 하위 클래스들의 예외들을 잡습니다.
   read_file rescue handle_error($!)
 
-  # good - this catches only the exceptions of Errno::ENOENT class and its
-  # descendant classes.
+  # 좋은 예 - 오직 Errno::ENOENT 클래스와 그 하위 클래스들의 예외들을 잡습니다.
   def foo
     read_file
   rescue Errno::ENOENT => error
@@ -824,38 +819,39 @@ Ruby는 Shopify에서 사용하는 주요 언어입니다. 저희 소스코드�
 
 * Avoid rescuing the `Exception` class.
 
+* `Exception` 클래스로 예외 처리를 피하세요.
+
   ~~~ ruby
-  # bad
+  # 나쁜 예
   begin
-    # calls to exit and kill signals will be caught (except kill -9)
+    # exit를 호출하면 kill 시그널이 잡힙니다. (단, kill -9는 제외)
     exit
   rescue Exception
     puts "you didn't really want to exit, right?"
     # exception handling
   end
 
-  # good
+  # 좋은 예
   begin
-    # a blind rescue rescues from StandardError, not Exception.
+    # 아무것도 없는 rescue는 `Exception`이 아닌 `StandardError`를 기준으로 예외 처리를 합니다.
   rescue => error
     # exception handling
   end
   ~~~
 
-* Prefer exceptions from the standard library over introducing new exception
-  classes.
+* 새 예외 클래스를 쓰기보단 표준 라이브러리에 있는 예외 사용을 권장합니다.
 
-* Use meaningful names for exception variables.
+* 예외 변수로 의미 있는 이름을 사용하세요.
 
   ~~~ ruby
-  # bad
+  # 나쁜 예
   begin
     # an exception occurs here
   rescue => e
     # exception handling
   end
 
-  # good
+  # 좋은 예
   begin
     # an exception occurs here
   rescue => error
