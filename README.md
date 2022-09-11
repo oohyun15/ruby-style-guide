@@ -46,7 +46,7 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
 * [문법(Syntax)](#문법syntax)
 * [네이밍(Naming)](#네이밍naming)
 * [주석(Comments)](#주석comments)
-* [Classes and Modules](#classes-and-modules)
+* [클래스 및 모듈(Classes and Modules)](#클래스-및-모듈classes-and-modules)
 * [Exceptions](#exceptions)
 * [Collections](#collections)
 * [Strings](#strings)
@@ -591,20 +591,20 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
 
 * 주석을 코드와 계속 동기화 시키세요.
 
-* 적절한 대문자 쓰기 및 구두점을 사용해 주석을 작성하세요. (각주: 주석은 항상 영어로 작성한다.)
+* 적절한 대문자 쓰기 및 구두점을 사용해 주석을 작성하세요. (각주: 주석은 항상 영어로 작성합니다.)
 
 * 불필요한 주석을 피하세요. 만약 코드 작동 방식히 명확하지 않다면 **어떻게** 코드가 돌아가는지가 아닌
    **왜** 코드 작성을 이렇게 했는지에 대해 집중하세요.
 
-## Classes and Modules
+## 클래스 및 모듈(Classes and Modules)
 
-* Prefer modules to classes with only class methods. Classes should be used only
-  when it makes sense to create instances out of them.
+* 클래스 메서드만 갖고 있을 경우 클래스보단 모듈을 권장합니다. 클래스는 해당 클래스로부터 인스턴스를
+  생성하는게 적절할 때만 사용해야 합니다.
 
-* Prefer `extend self` over `module_function`.
+* `module_function`보단 `extend self`를 권장합니다.
 
   ~~~ ruby
-  # bad
+  # 나쁜 예
   module SomeModule
     module_function
 
@@ -615,7 +615,7 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
     end
   end
 
-  # good
+  # 좋은 예
   module SomeModule
     extend self
 
@@ -627,11 +627,11 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
   end
   ~~~
 
-* Use a `class << self` block over `def self.` when defining class methods, and
-  group them together within a single block.
+* 클래스 메서드를 선언할 때 `def self.`보단 `class << self` 블록을 사용하세요. 그리고 한 블록 안에
+  클래스 메서드를 모으세요.
 
   ~~~ ruby
-  # bad
+  # 나쁜 예
   class SomeClass
     def self.method1
     end
@@ -644,11 +644,11 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
     def method3
     end
 
-    def self.method4 # this is actually not private
+    def self.method4 # 이건 실제로 private 메서드로 동작하지 않습니다.
     end
   end
 
-  # good
+  # 좋은 예
   class SomeClass
     class << self
       def method1
@@ -670,14 +670,13 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
   end
   ~~~
 
-* Respect the [Liskov Substitution Principle](https://en.wikipedia.org/wiki/Liskov_substitution_principle)
-  when designing class hierarchies.
+* 클래스 계층 구조를 설계할 때 [리스코프 치환 원칙](https://en.wikipedia.org/wiki/Liskov_substitution_principle)을
+  준수하세요.
 
-* Use `attr_accessor`, `attr_reader`, and `attr_writer` to define trivial
-  accessors and mutators.
+* 사소한 접근자와 설정자를 정의할 때 `attr_accessor`, `attr_reader`, `attr_writer`를 사용하세요.
 
   ~~~ ruby
-  # bad
+  # 나쁜 예
   class Person
     def initialize(first_name, last_name)
       @first_name = first_name
@@ -693,7 +692,7 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
     end
   end
 
-  # good
+  # 좋은 예
   class Person
     attr_reader :first_name, :last_name
 
@@ -704,13 +703,12 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
   end
   ~~~
 
-* Prefer `attr_reader` and `attr_accessor` over `attr`.
+* `attr`보단 `attr_reader`와 `attr_accessor`를 권장합니다.
 
-* Avoid class (`@@`) variables.
+* 클래스(`@@`) 변수 사용을 피하세요.
 
-* Indent the `public`, `protected`, and `private` methods as much as the method
-  definitions they apply to. Leave one blank line above the visibility modifier
-  and one blank line below it.
+* `public`, `protect`, `private`는 그 메서드 정의와 같은 깊이 만큼 들여쓰기를 하세요. 가시성을
+  위해 위아래로 빈 줄을 띄어두세요.
 
   ~~~ ruby
   class SomeClass
@@ -730,7 +728,7 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
   end
   ~~~
 
-* Prefer `alias_method` over `alias`.
+* `alias`보다 `alias_method`를 권장합니다.
 
 ## Exceptions
 
