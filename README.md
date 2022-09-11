@@ -48,7 +48,7 @@ Ruby는 Shopify에서 사용하는 주요 언어입니다. 저희 소스코드�
 * [주석(Comments)](#주석comments)
 * [클래스 및 모듈(Classes and Modules)](#클래스-및-모듈classes-and-modules)
 * [예외(Exceptions)](#예외exceptions)
-* [Collections](#collections)
+* [컬렉션(Collections)](#컬렉션collections)
 * [Strings](#strings)
 * [Regular Expressions](#regular-expressions)
 * [Percent Literals](#percent-literals)
@@ -859,107 +859,102 @@ Ruby는 Shopify에서 사용하는 주요 언어입니다. 저희 소스코드�
   end
   ~~~
 
-## Collections
+## 컬렉션(Collections)
 
-* Use literal array and hash creation notation unless you need to pass
-  parameters to their constructors.
+* 배열 및 해시를 생성할 때 파라미터를 넘겨주지 않는다면 배열/해시 표기법을 사용하세요.
 
   ~~~ ruby
-  # bad
+  # 나쁜 예
   arr = Array.new
   hash = Hash.new
 
-  # good
+  # 좋은 예
   arr = []
   hash = {}
   ~~~
 
-* Prefer the literal array syntax over `%w` or `%i`.
+* `%w`나 `%i`보단 배열 문법 그대로 사용하는 걸 권장합니다.
 
   ~~~ ruby
-  # bad
+  # 나쁜 예
   STATES = %w(draft open closed)
 
-  # good
+  # 좋은 예
   STATES = ["draft", "open", "closed"]
   ~~~
 
-* Append a trailing comma in multi-line collection literals.
+* 여러 줄의 컬렉션에서 마지막에 콤마를 붙이세요.
 
   ~~~ ruby
-  # bad
+  # 나쁜 예
   {
     foo: :bar,
     baz: :toto
   }
 
-  # good
+  # 좋은 예
   {
     foo: :bar,
     baz: :toto,
   }
   ~~~
 
-* When accessing the first or last element from an array, prefer `first` or
-  `last` over `[0]` or `[-1]`.
+* 배열에서 처음이나 마지막 원소를 접근할 때 `[0]`, `[-1]`보단 `first`, `last` 사용을 권장합니다.
 
-* Avoid mutable objects as hash keys.
+* 해시 키로 값이 바뀔 수 있는(mutable) 객체를 사용하는 걸 피하세요.
 
-* Use shorthand hash literal syntax when all keys are symbols.
+* 해시의 모든 키가 심볼일 때 단축 문법을 사용하세요.
 
   ~~~ ruby
-  # bad
+  # 나쁜 예
   { :a => 1, :b => 2 }
 
-  # good
+  # 좋은 예
   { a: 1, b: 2 }
   ~~~
 
-* Prefer hash rockets syntax over shorthand syntax when not all keys are
-  symbols.
+* 해시의 모든 키가 심볼이 아닐 때 단축 문법보단 로켓(`=>`) 문법 사용을 권장합니다.
 
   ~~~ ruby
-  # bad
+  # 나쁜 예
   { a: 1, "b" => 2 }
 
-  # good
+  # 좋은 예
   { :a => 1, "b" => 2 }
   ~~~
 
-* Prefer `Hash#key?` over `Hash#has_key?`.
+* `Hash#has_key?`보단 `Hash#key?` 사용을 권장합니다.
 
-* Prefer `Hash#value?` over `Hash#has_value?`.
+* `Hash#has_value?`보단 `Hash#value?` 사용을 권장합니다.
 
-* Use `Hash#fetch` when dealing with hash keys that should be present.
+* 반드시 존재해야 하는 해시 키를 다룰 때 `Hash#fetch`를 사용하세요.
 
   ~~~ ruby
   heroes = { batman: "Bruce Wayne", superman: "Clark Kent" }
-  # bad - if we make a mistake we might not spot it right away
+  # 나쁜 예 - 만약 실수하게 된다면 문제를 바로 알아차리지 못할 수 있습니다.
   heroes[:batman] # => "Bruce Wayne"
   heroes[:supermann] # => nil
 
-  # good - fetch raises a KeyError making the problem obvious
+  # 좋은 예 - fetch는 문제를 명확하게 하기 위해 KeyError를 발생시킵니다.
   heroes.fetch(:supermann)
   ~~~
 
-* Introduce default values for hash keys via `Hash#fetch` as opposed to using
-  custom logic.
+* 해시 키에 기본값을 설정할 때 커스텀 로직보단 `Hash#fetch`를 사용하세요.
 
   ~~~ ruby
   batman = { name: "Bruce Wayne", is_evil: false }
 
-  # bad - if we just use || operator with falsy value we won't get the expected result
+  # 나쁜 예 - 만약 거짓 값(nil, false)과 함께 || 연산자를 사용한다면 예상치 못한 결과를 얻을 수 있습니다.
   batman[:is_evil] || true # => true
 
-  # good - fetch work correctly with falsy values
+  # 좋은 예 - fetch는 거짓 값에서 올바르게 동작합니다.
   batman.fetch(:is_evil, true) # => false
   ~~~
 
-* Place `]` and `}` on the line after the last element when opening
-  brace is on a separate line from the first element.
+* 여는 괄호가 첫번째 원소 줄과 다른 줄에 있을 때 `]`과 `}`를 마지막 원소의 다음 줄에 배치하세요.
 
   ~~~ ruby
-  # bad
+  # 나쁜 예
   [
     1,
     2]
@@ -968,7 +963,7 @@ Ruby는 Shopify에서 사용하는 주요 언어입니다. 저희 소스코드�
     a: 1,
     b: 2}
 
-  # good
+  # 좋은 예
   [
     1,
     2,
