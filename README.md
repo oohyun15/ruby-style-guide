@@ -52,7 +52,7 @@ Ruby는 Shopify에서 사용하는 주요 언어입니다. 저희 소스코드�
 * [문자열(Strings)](#문자열strings)
 * [정규 표현식(Regular Expressions)](#정규-표현식regular-expressions)
 * [퍼센트 리터럴(Percent Literals)](#퍼센트-리터럴percent-literals)
-* [Testing](#testing)
+* [테스트(Testing)](#테스트testing)
 
 ## 일반(General)
 
@@ -1222,17 +1222,16 @@ Ruby는 Shopify에서 사용하는 주요 언어입니다. 저희 소스코드�
 * 괄호가 포함된 정규 표현식에서만 제외하고 모든 `%` 리터럴 구분 기호로 `()`사용을 권장합니다.
   `()`, `{}`, `[]`, `<>` 순으로 리터럴 안에서 사용하지 않는 기호를 사용하세요.
 
-## Testing
+## 테스트(Testing)
 
-* Treat test code like any other code you write. This means: keep readability,
-  maintainability, complexity, etc. in mind.
+* 여러분이 쓴 여타 다른 코드들처럼 테스트 코드를 취급하세요. 이 말은 즉슨 가독성, 유지관리성, 복잡성 등을
+  계속 염두에 두어야 한다는 뜻입니다.
 
-* Prefer Minitest as the test framework.
+* 테스트 프레임워크로 [Minitest](https://github.com/minitest/minitest)를 권장합니다.
 
-* Limit each test case to cover a single aspect of your code.
+* 코드 각기의 스펙을 다룰 수 있게 테스트 케이스를 제한해서 구성하세요.
 
-* Organize the setup, action, and assertion sections of the test case into
-  paragraphs separated by empty lines.
+* 테스트 케이스의 시작(setup), 동작(action), 어서션(assertion) 구역을 빈 줄로 구분된 단략으로 구성하세요.
 
   ~~~ ruby
   test "sending a password reset email clears the password hash and set a reset token" do
@@ -1246,37 +1245,34 @@ Ruby는 Shopify에서 사용하는 주요 언어입니다. 저희 소스코드�
   end
   ~~~
 
-* Split complex test cases into multiple simpler tests that test functionality
-  in isolation.
+* 복합적인 테스트 케이스를 단독으로 기능을 테스트하는 여러 개의 간단한 테스트들로 분리하세요.
 
-* Prefer using `test "foo"`-style syntax to define test cases over `def
-  test_foo`.
+* 테스트 케이스를 정의할 때 `def test_foo`보단 `test "foo"` 스타일의 구문 사용을 권장합니다.
 
-* Prefer using assertion methods that will yield a more descriptive error
-  message.
+* 좀 더 설명적인 에러 메시지를 가져오는 어서션 메서드 사용을 권장합니다.
 
   ~~~ ruby
-  # bad
+  # 나쁜 예
   assert user.valid?
   assert user.name == "tobi"
 
 
-  # good
+  # 좋은 예
   assert_predicate user, :valid?
   assert_equal "tobi", user.name
   ~~~
 
-* Avoid using `assert_nothing_raised`. Use a positive assertion instead.
+* `assert_nothing_raised` 사용을 피하세요. 대신 긍정적인 어서션을 사용하세요.
 
-* Prefer using assertions over expectations. Expectations lead to more brittle
-  tests, especially in combination with singleton objects.
+* 기대 구문(expectation)보단 어서션 사용을 권장합니다. 기대 구문은 특히 싱글톤 객체의 조합에서
+  더 불확실한 테스트로 이끕니다.
 
   ~~~ ruby
-  # bad
+  # 나쁜 예
   StatsD.expects(:increment).with("metric")
   do_something
 
-  # good
+  # 좋은 예
   assert_statsd_increment("metric") do
     do_something
   end
