@@ -49,7 +49,7 @@ Ruby는 Shopify에서 사용하는 주요 언어입니다. 저희 소스코드�
 * [클래스 및 모듈(Classes and Modules)](#클래스-및-모듈classes-and-modules)
 * [예외(Exceptions)](#예외exceptions)
 * [컬렉션(Collections)](#컬렉션collections)
-* [Strings](#strings)
+* [문자열(Strings)](#문자열strings)
 * [Regular Expressions](#regular-expressions)
 * [Percent Literals](#percent-literals)
 * [Testing](#testing)
@@ -163,7 +163,7 @@ Ruby는 Shopify에서 사용하는 주요 언어입니다. 저희 소스코드�
 
 * 메서드 정의 사이마다, 그리고 메서드 내부적으로 논리적 단락마다 빈 줄을 사용하세요.
 
-* 메서드 파라미터에 기본값을 할당할 때 `=` 연산자 주변에 공백을 사용하세요.
+* 메서드 파라미터에 기본값을 할당할 때 `=` 연산자 주위에 공백을 사용하세요.
 
 * 불필요한 `\` 줄 바꿈을 피하세요.
 
@@ -471,7 +471,7 @@ Ruby는 Shopify에서 사용하는 주요 언어입니다. 저희 소스코드�
   # 좋은 예
   @enabled = true if @enabled.nil?
 
-  # 또한 타당한 예 - defined?를 이용한 회피 방법
+  # 또한 유효한 예 - defined?를 이용한 회피 방법
   @enabled = true unless defined?(@enabled)
   ~~~
 
@@ -973,49 +973,47 @@ Ruby는 Shopify에서 사용하는 주요 언어입니다. 저희 소스코드�
   }
   ~~~
 
-## Strings
+## 문자열(Strings)
 
-* Prefer string interpolation and string formatting instead of string
-  concatenation:
+* 문자열 연결보단 문자열 보간과 문자열 형식화(formatting)를 권장합니다.
 
   ~~~ ruby
-  # bad
+  # 나쁜 예
   email_with_name = user.name + " <" + user.email + ">"
 
-  # good
+  # 좋은 예
   email_with_name = "#{user.name} <#{user.email}>"
 
-  # good
+  # 좋은 예
   email_with_name = format("%s <%s>", user.name, user.email)
   ~~~
 
-* Avoid padded-spacing inside braces in interpolated expressions.
+* 문자열 보간 표현식 괄호 안에 패딩 공백 사용을 피하세요.
 
   ~~~ ruby
-  # bad
+  # 나쁜 예
   "From: #{ user.first_name }, #{ user.last_name }"
 
-  # good
+  # 좋은 예
   "From: #{user.first_name}, #{user.last_name}"
   ~~~
 
-* Use double-quoted strings.
+* 쌍따옴표 문자열을 사용하세요.
 
   ~~~ ruby
-  # bad
+  # 나쁜 예
   'Just some text'
   'No special chars or interpolation'
 
-  # good
+  # 좋은 예
   "Just some text"
   "No special chars or interpolation"
   "Every string in #{project} uses double_quotes"
   ~~~
 
-* Avoid the character literal syntax `?x`.
+* `?x`와 같은 문자 문법 사용을 피하세요.
 
-* Use `{}` around instance and global variables being interpolated into a
-  string.
+* 문자열에 보간된 인스턴스 및 전역 변수 주위에 `{}`를 사용하세요.
 
   ~~~ ruby
   class Person
@@ -1026,56 +1024,54 @@ Ruby는 Shopify에서 사용하는 주요 언어입니다. 저희 소스코드�
       @last_name = last_name
     end
 
-    # bad - valid, but awkward
+    # 나쁜 예 - 유효하지만 어색합니다.
     def to_s
       "#@first_name #@last_name"
     end
 
-    # good
+    # 좋은 예
     def to_s
       "#{@first_name} #{@last_name}"
     end
   end
 
   $global = 0
-  # bad
+  # 나쁜 예
   puts "$global = #$global"
 
-  # fine, but don't use globals
+  # 괜찮지만 전역 변수를 쓰지 마세요.
   puts "$global = #{$global}"
   ~~~
 
-* Avoid `Object#to_s` on interpolated objects.
+* 보간한 객체에서 `Object#to_s` 사용을 피하세요.
 
   ~~~ ruby
-  # bad
+  # 나쁜 예
   message = "This is the #{result.to_s}."
 
-  # good - `result.to_s` is called implicitly.
+  # 좋은 예 - 암시적으로 `result.to_s`가 호출됩니다.
   message = "This is the #{result}."
   ~~~
 
-* Avoid `String#gsub` in scenarios in which you can use a faster more
-  specialized alternative.
+* 더 빠르고 전문화된 대안이 있는 상황에서는 `String#gsub` 사용을 피하세요.
 
   ~~~ ruby
   url = "http://example.com"
   str = "lisp-case-rules"
 
-  # bad
+  # 나쁜 예
   url.gsub("http://", "https://")
   str.gsub("-", "_")
   str.gsub(/[aeiou]/, "")
 
-  # good
+  # 좋은 예
   url.sub("http://", "https://")
   str.tr("-", "_")
   str.delete("aeiou")
   ~~~
 
-* When using heredocs for multi-line strings keep in mind the fact that they
-  preserve leading whitespace. It's a good practice to employ some margin based
-  on which to trim the excessive whitespace.
+* 여러 줄에 걸친 히어독(heredoc)을 사용할 때 공백 문자가 유지되는 걸 기억하세요. 과도한 공백
+  문자를 줄이기 위해 약간의 마진을 사용하는 건 좋은 방법입니다.
 
   ~~~ ruby
   code = <<-END.gsub(/^\s+\|/, "")
@@ -1086,7 +1082,7 @@ Ruby는 Shopify에서 사용하는 주요 언어입니다. 저희 소스코드�
   END
   # => "def test\n  some_method\n  other_method\nend\n"
 
-  # In Rails you can use `#strip_heredoc` to achieve the same result
+  # Rails에서 `#strip_heredoc`을 통해 위와 같은 결과를 얻을 수 있습니다.
   code = <<-END.strip_heredoc
     def test
       some_method
@@ -1096,9 +1092,8 @@ Ruby는 Shopify에서 사용하는 주요 언어입니다. 저희 소스코드�
   # => "def test\n  some_method\n  other_method\nend\n"
   ~~~
 
-* In Ruby 2.3, prefer ["squiggly
-  heredoc"](https://github.com/ruby/ruby/pull/878) syntax, which has the same
-  semantics as `strip_heredoc` from Rails:
+* Ruby 2.3 이상에서는 ["물결표 히어독"](https://github.com/ruby/ruby/pull/878) 문법
+  사용을 권장합니다. 이건 Rails에서의 `strip_heredoc`과 동일하게 동작합니다.
 
   ~~~ruby
   code = <<~END
@@ -1110,10 +1105,10 @@ Ruby는 Shopify에서 사용하는 주요 언어입니다. 저희 소스코드�
   # => "def test\n  some_method\n  other_method\nend\n"
   ~~~
 
-* Indent heredoc contents and closing according to its opening.
+* 히어독 내용과 끝을 시작 지점과 맞추세요.
 
   ~~~ruby
-  # bad
+  # 나쁜 예
   class Foo
     def bar
       <<~SQL
@@ -1122,7 +1117,7 @@ Ruby는 Shopify에서 사용하는 주요 언어입니다. 저희 소스코드�
     end
   end
 
-  # good
+  # 좋은 예
   class Foo
     def bar
       <<~SQL
@@ -1131,21 +1126,21 @@ Ruby는 Shopify에서 사용하는 주요 언어입니다. 저희 소스코드�
     end
   end
 
-  # bad
+  # 나쁜 예
 
-  # heredoc contents is before closing heredoc.
+  # 히어독 내용이 히어독 끝맺음보다 전에 있습니다.
   foo arg,
       <<~EOS
     Hi
       EOS
 
-  # good
+  # 좋은 예
   foo arg,
       <<~EOS
     Hi
   EOS
 
-  # good
+  # 좋은 예
   foo arg,
     <<~EOS
       Hi
