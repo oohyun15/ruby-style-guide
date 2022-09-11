@@ -50,7 +50,7 @@ Ruby는 Shopify에서 사용하는 주요 언어입니다. 저희 소스코드�
 * [예외(Exceptions)](#예외exceptions)
 * [컬렉션(Collections)](#컬렉션collections)
 * [문자열(Strings)](#문자열strings)
-* [Regular Expressions](#regular-expressions)
+* [정규 표현식(Regular Expressions)](#정규-표현식regular-expressions)
 * [Percent Literals](#percent-literals)
 * [Testing](#testing)
 
@@ -1147,55 +1147,55 @@ Ruby는 Shopify에서 사용하는 주요 언어입니다. 저희 소스코드�
     EOS
   ~~~
 
-## Regular Expressions
+## 정규 표현식(Regular Expressions)
 
-* Prefer plain text search over regular expressions in strings.
+* 문자열 내에서 단순 텍스트 찾기라면 정규 표현식을 쓰지 않는걸 권장합니다.
 
   ~~~ ruby
   string["text"]
   ~~~
 
-* Use non-capturing groups when you don't use the captured result.
+* 캡쳐한 결과를 사용하지 않을 때 non-capturing 그룹을 사용하세요.
 
   ~~~ ruby
-  # bad
+  # 나쁜 예
   /(first|second)/
 
-  # good
+  # 좋은 예
   /(?:first|second)/
   ~~~
 
-* Prefer `Regexp#match` over Perl-legacy variables to capture group matches.
+* 그룹 내 값을 캡쳐할 때 Perl 기반의 레거시 변수보단 `Regexp#match` 사용을 권장합니다.
 
   ~~~ ruby
-  # bad
+  # 나쁜 예
   /(regexp)/ =~ string
   process $1
 
-  # good
+  # 좋은 예
   /(regexp)/.match(string)[1]
   ~~~
 
-* Prefer named groups over numbered groups.
+* 숫자 형식 그룹보단 이름 기반의 그룹 사용을 권장합니다.
 
   ~~~ ruby
-  # bad
+  # 나쁜 예
   /(regexp)/ =~ string
   ...
   process Regexp.last_match(1)
 
-  # good
+  # 좋은 예
   /(?<meaningful_var>regexp)/ =~ string
   ...
   process meaningful_var
   ~~~
 
-* Prefer `\A` and `\z` over `^` and `$` when matching strings from start to end.
+* 문자열의 처음부터 끝까지 찾을 때는 `^`, `$`보단 `\A`, `\z` 사용을 권장합니다.
 
   ~~~ ruby
   string = "some injection\nusername"
-  string[/^username$/] # `^` and `$` matches start and end of lines.
-  string[/\Ausername\z/] # `\A` and `\z` matches start and end of strings.
+  string[/^username$/] # `^`, `$`는 줄의 시작부터 끝까지 찾습니다.
+  string[/\Ausername\z/] # `\A`, `\z`는 문자열의 시작부터 끝까지 찾습니다.
   ~~~
 
 ## Percent Literals
