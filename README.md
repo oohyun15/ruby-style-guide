@@ -51,7 +51,7 @@ Ruby는 Shopify에서 사용하는 주요 언어입니다. 저희 소스코드�
 * [컬렉션(Collections)](#컬렉션collections)
 * [문자열(Strings)](#문자열strings)
 * [정규 표현식(Regular Expressions)](#정규-표현식regular-expressions)
-* [Percent Literals](#percent-literals)
+* [퍼센트 리터럴(Percent Literals)](#퍼센트-리터럴percent-literals)
 * [Testing](#testing)
 
 ## 일반(General)
@@ -1198,32 +1198,29 @@ Ruby는 Shopify에서 사용하는 주요 언어입니다. 저희 소스코드�
   string[/\Ausername\z/] # `\A`, `\z`는 문자열의 시작부터 끝까지 찾습니다.
   ~~~
 
-## Percent Literals
+## 퍼센트 리터럴(Percent Literals)
 
-* Use `%()` for single-line strings which require both interpolation and
-  embedded double-quotes. For multi-line strings, prefer heredocs.
+* 문자열 보간과 큰따옴표가 필요한 단일 줄의 문자열에서만 `%()`를 사용하세요. 여러 줄의 경우,
+  히어독 사용을 권장합니다.
 
-* Avoid `%q` unless you have a string with both `'` and `"` in it. Regular
-  string literals are more readable and should be preferred unless a lot of
-  characters would have to be escaped in them.
+* 문자열에 `'`와 `"`가 모두 있지 않다면 `%q` 사용을 피하세요. 일반 문자열 리터럴이 더 읽기 쉬우며
+  문자열 내 이스케이프 할 단어가 많지 않다면 문자열 그대로 쓰는 것이 더 낫습니다.
 
-* Use `%r` only for regular expressions matching at least one `/` character.
+* 정규 표현식에 적어도 1개 이상의 `/`가 있을 때만 `%r`을 사용하세요.
 
   ~~~ ruby
-  # bad
+  # 나쁜 예
   %r{\s+}
 
-  # good
+  # 좋은 예
   %r{^/(.*)$}
   %r{^/blog/2011/(.*)$}
   ~~~
 
-* Avoid the use of `%s`. Use `:"some string"` to create a symbol with spaces in
-  it.
+* `%s` 사용을 피하세요. 공백이 있는 심볼을 만들기 위해선 `:"some string"`과 같이 사용하세요.
 
-* Prefer `()` as delimiters for all `%` literals, except, as often occurs in
-  regular expressions, when parentheses appear inside the literal. Use the first
-  of `()`, `{}`, `[]`, `<>` which does not appear inside the literal.
+* 괄호가 포함된 정규 표현식에서만 제외하고 모든 `%` 리터럴 구분 기호로 `()`사용을 권장합니다.
+  `()`, `{}`, `[]`, `<>` 순으로 리터럴 안에서 사용하지 않는 기호를 사용하세요.
 
 ## Testing
 
