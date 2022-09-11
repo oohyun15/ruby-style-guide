@@ -45,6 +45,7 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
 * [레이아웃(Layout)](#레이아웃layout)
 * [문법(Syntax)](#문법syntax)
 * [네이밍(Naming)](#네이밍naming)
+* [주석(Comments)](#주석comments)
 * [Classes and Modules](#classes-and-modules)
 * [Exceptions](#exceptions)
 * [Collections](#collections)
@@ -582,18 +583,18 @@ Ruby는 Shopify에서 사용하는 메인 언어입니다. 저희 소스코드�
 
 * 매직 넘버를 피하세요. 상수를 사용하고 그 상수에 의미있는 이름을 지어주세요.
 
-* 차별적 기원을 가진 (혹은 그렇게 해석될 수 있는) 명명법을 피하세요.
+* 차별적 어원을 가진 (혹은 그렇게 해석될 수 있는) 명명법을 피하세요.
 
-## Comments
+## 주석(Comments)
 
-* Include relevant context in comments, as readers might be missing it.
+* 읽는 사람이 놓치지 않게 주석에 관련된 문맥을 포함하세요.
 
-* Keep comments in sync with code.
+* 주석을 코드와 계속 동기화 시키세요.
 
-* Write comments using proper capitalization and punctuation.
+* 적절한 대문자 쓰기 및 구두점을 사용해 주석을 작성하세요. (각주: 주석은 항상 영어로 작성한다.)
 
-* Avoid superfluous comments. Focus on **why** the code is the way it is if
-  this is not obvious, not **how** the code works.
+* 불필요한 주석을 피하세요. 만약 코드 작동 방식히 명확하지 않다면 **어떻게** 코드가 돌아가는지가 아닌
+   **왜** 코드 작성을 이렇게 했는지에 대해 집중하세요.
 
 ## Classes and Modules
 
